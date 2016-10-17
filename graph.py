@@ -95,7 +95,7 @@ class digraph(object):
 
 	def getSCC(self):
 		for i in self.nodes:
-			# TODO
+			# TODO: Strongly Connected Collection
 			pass
 
 	def show(self):
@@ -114,7 +114,7 @@ The Weighted Graph
 
 """
 
-class edge(object):
+class Edge(object):
 
 	def __init__(self, v1, v2, w):
 		self.v1 = v1
@@ -122,7 +122,26 @@ class edge(object):
 		self.w = w
 
 	def equals(self, e2):
-		if ((self.v1==e2.v1) and (self.v2==e2.v2) and (self.w==e2.w)):
+		if  (self.w==e2.w):
+			if ((self.v1==e2.v1) and (self.v2==e2.v2)):
+				return True
+			elif ((self.v1==e2.v2) and (self.v2==e2.v1)):
+				return True
+			else:
+				return False
+		else:
+			return False
+
+	def connects(self, v1, v2):
+		if ((self.v1==v1) and (self.v2==v2)):
+				return True
+		elif ((self.v1==v2) and (self.v2==v1)):
+			return True
+		else:
+			return False
+
+	def has(self, v):
+		if (self.v1 == v or self.v2 == v):
 			return True
 		else:
 			return False
@@ -132,7 +151,7 @@ class edge(object):
 
 #---
 
-class wgraph(object):
+class Wgraph(object):
 
 	def __init__(self):
 		self.E = []
@@ -142,27 +161,42 @@ class wgraph(object):
 		if vertex not in self.V:
 			self.V.append(vertex)
 
+
 	def delV(self, vertex):
 		if vertex in self.V:
 			self.V.remove(vertex)
+		#TODOnext: If vertex connects other vertices, delete those edges (call delE).
 
 	def addE(self, v1, v2, w):
-		temp = edge(v1,v2,w)
+		temp = Edge(v1,v2,w)
 		for i in self.E:
 			if temp.equals(i):
 				return
 		self.E.append(temp)
 
 	def delE(self, v1, v2, w):
-		temp = edge(v1,v2,w)
+		temp = Edge(v1,v2,w)
 		c=0
 		for i in self.E:
 			if temp.equals(i):
 				self.E.pop(c)
 			c+=1
 
+	def inReach(self, v1, v2): # Tests if v1 and v2 vertices are reachable in graph
+		for e in self.E:
+			if e.connects(v1, v2):
+				return True
+		else:
+			return False
+
 	def __str__(self):
-		return "TODO: MAKE GRAPH REPRESENTATION"
+		retstr = "VERTICES: "
+		for i in self.V:
+			retstr += str(i) + ' '
+		retstr += "\nEDGES: "
+		for j in self.E:
+			retstr = retstr + "\n" + str(j)
+		return retstr
 
 """
 # Digraph Code
@@ -181,10 +215,10 @@ g.delnode(3)
 g.show()
 """
 
-a = edge(2,4,1)
-b = edge(2,4,2)
+a = Edge(2,4,1)
+b = Edge(2,4,2)
 
-g = wgraph()
+g = Wgraph()
 
 g.addV(1)
 g.addV(2)
@@ -192,4 +226,20 @@ g.addV(3)
 g.addV(4)
 g.addV(5)
 
+g.addE(1,4,2)
+g.addE(4,1,2) # Redundant. Ignored.
+g.addE(2,3,8)
+
+
+print g
+print g.inReach(4,1)
+print g.inReach(1,4)
+print g.inReach(4,2)
+print g.inReach(3,2)
+print g.inReach(2,5)
+g.addE(2,5,4)
+print 
+print g
+print g.inReach(2,5)
+g.delV(2)
 print g
