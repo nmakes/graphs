@@ -104,6 +104,23 @@ class digraph(object):
 			print str(i.index),
 		print ']'
 
+
+# Digraph Code
+
+# g = digraph()
+
+# g.addnode(1)
+# g.addnode(2)
+# g.addnode(3)
+# g.addnode(4)
+
+# g.show()
+
+# g.delnode(3)
+
+# g.show()
+
+
 """
 ==================
 The Weighted Graph
@@ -199,47 +216,38 @@ class Wgraph(object):
 		return retstr
 
 """
-# Digraph Code
-
-g = digraph()
-
-g.addnode(1)
-g.addnode(2)
-g.addnode(3)
-g.addnode(4)
-
-g.show()
-
-g.delnode(3)
-
-g.show()
+=====================================================================================================
+=========================================== MAIN FUNCTION ===========================================
+=====================================================================================================
 """
 
-a = Edge(2,4,1)
-b = Edge(2,4,2)
+if __name__ == "__main__":
 
-g = Wgraph()
+	a = Edge(2,4,1)
+	b = Edge(2,4,2)
 
-g.addV(1)
-g.addV(2)
-g.addV(3)
-g.addV(4)
-g.addV(5)
+	g = Wgraph()
 
-g.addE(1,4,2)
-g.addE(4,1,2) # Redundant. Ignored.
-g.addE(2,3,8)
+	g.addV(1)
+	g.addV(2)
+	g.addV(3)
+	g.addV(4)
+	g.addV(5)
+
+	g.addE(1,4,2)
+	g.addE(4,1,2) # Redundant. Ignored.
+	g.addE(2,3,8)
 
 
-print g
-print g.inReach(4,1)
-print g.inReach(1,4)
-print g.inReach(4,2)
-print g.inReach(3,2)
-print g.inReach(2,5)
-g.addE(2,5,4)
-print 
-print g
-print g.inReach(2,5)
-g.delV(2)
-print g
+	print g
+	print g.inReach(4,1)
+	print g.inReach(1,4)
+	print g.inReach(4,2)
+	print g.inReach(3,2)
+	print g.inReach(2,5)
+	g.addE(2,5,4)
+	print 
+	print g
+	print g.inReach(2,5)
+	g.delV(2)
+	print g
