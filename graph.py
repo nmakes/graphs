@@ -138,7 +138,7 @@ class Edge(object):
 		self.v2 = v2
 		self.w = w
 
-	def equals(self, e2):
+	def equals(self, e2): # Checks if e2 has same vertices and weight as self
 		if  (self.w==e2.w):
 			if ((self.v1==e2.v1) and (self.v2==e2.v2)):
 				return True
@@ -149,7 +149,7 @@ class Edge(object):
 		else:
 			return False
 
-	def connects(self, v1, v2):
+	def connects(self, v1, v2): # Checks if edge connects v1 and v2
 		if ((self.v1==v1) and (self.v2==v2)):
 				return True
 		elif ((self.v1==v2) and (self.v2==v1)):
@@ -157,7 +157,7 @@ class Edge(object):
 		else:
 			return False
 
-	def has(self, v):
+	def has(self, v): # Checks if edge has vertex v at an end
 		if (self.v1 == v or self.v2 == v):
 			return True
 		else:
@@ -174,24 +174,24 @@ class Wgraph(object):
 		self.E = []
 		self.V = []
 
-	def addV(self, vertex):
+	def addV(self, vertex): # Adds vertex to graph
 		if vertex not in self.V:
 			self.V.append(vertex)
 
 
-	def delV(self, vertex):
+	def delV(self, vertex): # Deletes vertex from graph
 		if vertex in self.V:
 			self.V.remove(vertex)
 		#TODOnext: If vertex connects other vertices, delete those edges (call delE).
 
-	def addE(self, v1, v2, w):
+	def addE(self, v1, v2, w): # Adds edge of weight w between v1 and v2
 		temp = Edge(v1,v2,w)
 		for i in self.E:
 			if temp.equals(i):
 				return
 		self.E.append(temp)
 
-	def delE(self, v1, v2, w):
+	def delE(self, v1, v2, w): # Deletes edge between v1 and v2
 		temp = Edge(v1,v2,w)
 		c=0
 		for i in self.E:
@@ -200,6 +200,7 @@ class Wgraph(object):
 			c+=1
 
 	def inReach(self, v1, v2): # Tests if v1 and v2 vertices are reachable in graph
+		# TODO: Check for arbitrary path length
 		for e in self.E:
 			if e.connects(v1, v2):
 				return True
@@ -249,5 +250,7 @@ if __name__ == "__main__":
 	print 
 	print g
 	print g.inReach(2,5)
-	g.delV(2)
+	g.addE(1,4,9)
+	print g
+	g.delE(4,1,2)
 	print g
