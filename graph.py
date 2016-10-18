@@ -182,7 +182,9 @@ class Wgraph(object):
 	def delV(self, vertex): # Deletes vertex from graph
 		if vertex in self.V:
 			self.V.remove(vertex)
-		#TODOnext: If vertex connects other vertices, delete those edges (call delE).
+		for e in self.E:
+			if e.has(vertex):
+				self.delE(e.v1, e.v2, e.w)
 
 	def addE(self, v1, v2, w): # Adds edge of weight w between v1 and v2
 		temp = Edge(v1,v2,w)
@@ -252,5 +254,8 @@ if __name__ == "__main__":
 	print g.inReach(2,5)
 	g.addE(1,4,9)
 	print g
-	g.delE(4,1,2)
+	g.delV(4)
 	print g
+	g.delV(4)
+	print g
+	
